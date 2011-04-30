@@ -1,3 +1,5 @@
+window.models = {}
+
 class Model
   @id: ->
     @_id = 1 unless @_id?
@@ -6,6 +8,7 @@ class Model
   
   constructor: ->
     @id = Model.id()
+    window.models[@id] = this
     @attributes = _([])
     
   attr: (name, options) ->
@@ -23,21 +26,24 @@ class Model
     else
       this.__defineGetter__ name, -> this["_#{name}"]
     
-    set = null
+    setter = null
     if options.set?
-      set = _.bind(options.set, this)
+      setter = _.bind(options.set, this)
     else
-      set = (y) ->
+      setter = (y) ->
         this["_#{name}"] = y
     
     this.__defineSetter__ name, (y) ->
       oldval = this[name]
-      set.call(this, y)
+      setter.call(this, y)
       newval = this[name]
       this["_#{name}_listeners"].each((fn) -> fn(oldval, newval))
 
   listen: (property, fn) ->
-    this["_#{property}_listeners"].push fn      
+    this["_#{property}_listeners"].push(fn)  
+    
+  unlisten: (property, fn) ->
+    this["_#{property}_listeners"] = this["_#{property}_listeners"].without(fn)    
       
     
 window.Model = Model

@@ -10,11 +10,12 @@
   };
   TileView = (function() {
     __extends(TileView, View);
-    function TileView(tile, width, height) {
+    function TileView(parent, tile, width, height) {
       this.tile = tile;
       this.width = width;
       this.height = height;
       TileView.__super__.constructor.apply(this, arguments);
+      this.event('click');
       if (this.width == null) {
         this.width = 50;
       }
@@ -22,12 +23,23 @@
         this.height = 50;
       }
       this.element = $("<figure data-x=\"" + this.tile.x + "\" data-y=\"" + this.tile.y + "\"\n  class=\"tile\" \n  style=\"width:" + this.width + "px;height:" + this.height + "px;top:" + (this.tile.y * this.height) + "px;left:" + (this.tile.x * this.width) + "px\">\n</figure>");
-      this.tile.listen('thing', _.bind(function() {
+      this.element.click(_(function() {
+        log('clicked!');
+        return this.fire('click', {
+          source: this,
+          details: ''
+        });
+      }).bind(this));
+      this.tile.listen('thing', _(function() {
         return this.render;
-      }, this));
+      }).bind(this));
     }
     TileView.prototype.render = function() {
-      return this.element.html("");
+      this.element.html("");
+      this.children.each(_(function(v) {
+        return this.element.append(v.render());
+      }).bind(this));
+      return this.element;
     };
     return TileView;
   })();

@@ -10,7 +10,7 @@
   };
   MapView = (function() {
     __extends(MapView, View);
-    function MapView(map, width, height) {
+    function MapView(parent, map, width, height) {
       this.map = map;
       this.width = width;
       this.height = height;
@@ -23,15 +23,15 @@
       }
       this.element = $("<figure style=\"width:" + this.width + "px;height:" + this.height + "px\" class=\"map\">\n  \n</figure>");
       this.tiles = _([]);
-      this.map.tiles.each(_.bind(function(tile) {
-        return this.tiles.push(new TileView(tile));
-      }, this));
+      this.map.tiles.each(_(function(tile) {
+        return this.addChild(new TileView(this, tile));
+      }).bind(this));
     }
     MapView.prototype.render = function() {
       this.element.html("");
-      this.tiles.each(_.bind(function(tile) {
-        return this.element.append(tile.render());
-      }, this));
+      this.children.each(_(function(v) {
+        return this.element.append(v.render());
+      }).bind(this));
       return this.element;
     };
     return MapView;

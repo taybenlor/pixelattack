@@ -1,5 +1,6 @@
 (function() {
   var Model;
+  window.models = {};
   Model = (function() {
     Model.id = function() {
       if (this._id == null) {
@@ -10,10 +11,11 @@
     };
     function Model() {
       this.id = Model.id();
+      window.models[this.id] = this;
       this.attributes = _([]);
     }
     Model.prototype.attr = function(name, options) {
-      var set;
+      var setter;
       options = options || {
         "default": null
       };
@@ -27,18 +29,18 @@
           return this["_" + name];
         });
       }
-      set = null;
+      setter = null;
       if (options.set != null) {
-        set = _.bind(options.set, this);
+        setter = _.bind(options.set, this);
       } else {
-        set = function(y) {
+        setter = function(y) {
           return this["_" + name] = y;
         };
       }
       return this.__defineSetter__(name, function(y) {
         var newval, oldval;
         oldval = this[name];
-        set.call(this, y);
+        setter.call(this, y);
         newval = this[name];
         return this["_" + name + "_listeners"].each(function(fn) {
           return fn(oldval, newval);
@@ -47,6 +49,9 @@
     };
     Model.prototype.listen = function(property, fn) {
       return this["_" + property + "_listeners"].push(fn);
+    };
+    Model.prototype.unlisten = function(property, fn) {
+      return this["_" + property + "_listeners"] = this["_" + property + "_listeners"].without(fn);
     };
     return Model;
   })();

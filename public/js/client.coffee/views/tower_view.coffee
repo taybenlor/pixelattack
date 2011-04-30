@@ -1,5 +1,5 @@
 class TowerView extends View
-  constructor: (@tower) ->
+  constructor: (parent, @tower) ->
     super
     
     @element = $ """
@@ -9,4 +9,5 @@ class TowerView extends View
   
   render: ->
     @element
-    
+
+window.TowerView = TowerView

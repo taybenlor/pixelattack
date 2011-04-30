@@ -1,6 +1,8 @@
 class TileView extends View
-  constructor: (@tile, @width, @height) ->
+  constructor: (parent, @tile, @width, @height) ->
     super
+    
+    this.event 'click'
     
     @width = 50 unless @width?
     @height = 50 unless @height?
@@ -11,11 +13,22 @@ class TileView extends View
         style="width:#{@width}px;height:#{@height}px;top:#{@tile.y*@height}px;left:#{@tile.x*@width}px">
       </figure>"""
     
-    @tile.listen('thing', _.bind(-> 
+    @element.click _(->
+      log 'clicked!'
+      this.fire 'click', 
+        source: this,
+        details: ''
+    ).bind(this)
+    
+    @tile.listen 'thing', _(-> 
       this.render
-    , this))
+    ).bind(this)
     
   render: ->
     @element.html ""
+    @children.each _((v) ->
+      @element.append(v.render())
+    ).bind(this)
+    @element
     
 window.TileView = TileView

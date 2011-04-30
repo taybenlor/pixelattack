@@ -1,5 +1,5 @@
 class MapView extends View
-  constructor: (@map, @width, @height) ->
+  constructor: (parent, @map, @width, @height) ->
     super
     
     @width = 750 unless @width?
@@ -12,15 +12,15 @@ class MapView extends View
       """
     @tiles = _([])
     
-    @map.tiles.each _.bind((tile) ->
-      @tiles.push new TileView(tile)
-    , this)
+    @map.tiles.each _((tile) ->
+      this.addChild(new TileView(this, tile))
+    ).bind(this)
     
   render: ->
     @element.html ""
-    @tiles.each _.bind((tile) ->
-      @element.append tile.render()
-    , this)
+    @children.each _((v) ->
+      @element.append v.render()
+    ).bind(this)
     @element
     
 window.MapView = MapView

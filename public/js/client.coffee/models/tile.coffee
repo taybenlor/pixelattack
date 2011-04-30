@@ -12,5 +12,7 @@ class Tile extends Model
     thing = @thing.leave
     @thing = null
     thing
+    
+  
   
 window.Tile = Tile

@@ -19,11 +19,11 @@
         "default": height || 10
       });
       this.tiles = _([]);
-      _(_.range(this.width)).each(_.bind(function(x) {
-        return _(_.range(this.height)).each(_.bind(function(y) {
+      _(_.range(this.width)).each(_(function(x) {
+        return _(_.range(this.height)).each(_(function(y) {
           return this.tiles.push(new Tile(x, y));
-        }, this));
-      }, this));
+        }).bind(this));
+      }).bind(this));
     }
     return Map;
   })();

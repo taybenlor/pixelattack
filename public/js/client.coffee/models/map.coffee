@@ -7,10 +7,10 @@ class Map extends Model
     
     @tiles = _([])
     
-    _(_.range(@width)).each _.bind((x) ->
-      _(_.range(@height)).each _.bind((y)->
+    _(_.range(@width)).each _((x) ->
+      _(_.range(@height)).each _((y)->
         @tiles.push new Tile(x, y)
-      , this)
-    , this)
+      ).bind(this)
+    ).bind(this)
     
 window.Map = Map
