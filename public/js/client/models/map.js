@@ -40,6 +40,11 @@
         return !tile.converted;
       });
     };
+    Map.prototype.usedTileCount = function() {
+      return (_(this.tiles).reject(function(tile) {
+        return !tile.occupied();
+      })).length;
+    };
     Map.prototype.getTile = function(x, y) {
       if ((x < 0) || (y < 0) || (x > this.width) || (y > this.height)) {
         return null;

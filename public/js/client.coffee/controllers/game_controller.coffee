@@ -11,6 +11,8 @@ class GameController extends Controller
       this.buildTower(event.source.tile, 'default')
     ).bind(this)
     
+    @game.listen 'finished', _(this.done).bind(this)
+    
     $("#main").html(@game_view.render())
     
     tick = _(->
@@ -23,5 +25,9 @@ class GameController extends Controller
     
   buildTower: (tile, type) ->
     @game.build(tile, type)
+    
+  done: ->
+    window.game_controller = null
+    window.end_controller = new EndController(@game)
     
 window.GameController = GameController

@@ -10,10 +10,17 @@
   };
   EndController = (function() {
     __extends(EndController, Controller);
-    function EndController() {
+    function EndController(game) {
+      this.game = game;
       EndController.__super__.constructor.apply(this, arguments);
+      this.end_view = new EndView(null, this.game);
+      this.end_view.listen('click', _(function(name, event) {
+        return this.play();
+      }).bind(this));
+      $("#main").html(this.end_view.render());
     }
-    EndController.prototype.restart = function() {
+    EndController.prototype.play = function() {
+      this.end_view = null;
       return window.game_controller = new GameController();
     };
     return EndController;

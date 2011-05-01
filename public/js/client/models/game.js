@@ -11,7 +11,7 @@
   DIFF_INCREASE = 1.1;
   DIFF_INTERVAL = 30000;
   WAVE_PERCENTAGE = 0.1;
-  LOSS_DENSITY_COUNT = 145;
+  LOSS_DENSITY_COUNT = 120;
   Game = (function() {
     __extends(Game, Model);
     function Game() {
@@ -43,6 +43,10 @@
     }
     Game.prototype.addEnemy = function() {
       var converted, number;
+      this.enemy_count = this.map.usedTileCount();
+      if (this.enemy_count >= LOSS_DENSITY_COUNT) {
+        this.finished = true;
+      }
       converted = this.map.convertedTiles();
       number = Math.max(Math.floor(converted.length * WAVE_PERCENTAGE * this.difficulty), 1);
       _(number).times(_(function() {
@@ -54,13 +58,11 @@
           this.enemies.push(enemy);
           return enemy.listen('destroyed', _(function(old_val, new_val) {
             if (new_val) {
-              this.destroyEnemy(enemy);
+              return this.destroyEnemy(enemy);
             }
-            return this.enemy_count -= number;
           }).bind(this));
         }
       }).bind(this));
-      this.enemy_count += number;
       return this.last_enemy = ticks;
     };
     Game.prototype.destroyEnemy = function(enemy) {
@@ -99,6 +101,9 @@
       return false;
     };
     Game.prototype.update = function() {
+      if (this.finished) {
+        return;
+      }
       if (this.last_enemy == null) {
         this.last_enemy = ticks;
       }

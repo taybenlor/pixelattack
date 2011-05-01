@@ -14,7 +14,7 @@
       IntroController.__super__.constructor.apply(this, arguments);
       this.intro_view = new IntroView(null);
       this.intro_view.listen('click', _(function(name, event) {
-        return this.play;
+        return this.play();
       }).bind(this));
       $("#main").html(this.intro_view.render());
     }

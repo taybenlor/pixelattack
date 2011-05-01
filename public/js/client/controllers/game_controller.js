@@ -20,6 +20,7 @@
       this.game_view.listen('click', _(function(name, event) {
         return this.buildTower(event.source.tile, 'default');
       }).bind(this));
+      this.game.listen('finished', _(this.done).bind(this));
       $("#main").html(this.game_view.render());
       tick = _(function() {
         window.ticks = Date.now();
@@ -30,6 +31,10 @@
     }
     GameController.prototype.buildTower = function(tile, type) {
       return this.game.build(tile, type);
+    };
+    GameController.prototype.done = function() {
+      window.game_controller = null;
+      return window.end_controller = new EndController(this.game);
     };
     return GameController;
   })();

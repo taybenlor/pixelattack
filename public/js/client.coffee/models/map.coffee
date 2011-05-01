@@ -23,6 +23,9 @@ class Map extends Model
     
   convertedTiles: ->
     _(@tiles).reject (tile) -> !tile.converted
+    
+  usedTileCount: ->
+    (_(@tiles).reject (tile) -> !tile.occupied()).length
   
   getTile: (x, y) ->
     return null if (x < 0) or (y < 0) or (x > @width) or (y > @height)

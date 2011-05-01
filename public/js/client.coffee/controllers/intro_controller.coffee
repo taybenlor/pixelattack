@@ -5,7 +5,7 @@ class IntroController extends Controller
     @intro_view = new IntroView(null);
     
     @intro_view.listen 'click', _((name, event) ->
-      this.play
+      this.play()
     ).bind(this)
     
     $("#main").html(@intro_view.render())

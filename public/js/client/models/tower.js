@@ -14,7 +14,7 @@
     area: 10
   };
   DAMAGE = {
-    "default": 2,
+    "default": 4,
     cannon: 10,
     area: 1
   };

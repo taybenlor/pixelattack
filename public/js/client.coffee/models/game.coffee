@@ -3,7 +3,7 @@ DIFF_INTERVAL = 30000
 
 WAVE_PERCENTAGE = 0.1
 
-LOSS_DENSITY_COUNT = 145 
+LOSS_DENSITY_COUNT = 120
 
 class Game extends Model
   constructor: ->
@@ -26,7 +26,10 @@ class Game extends Model
     
     @last_difficulty = ticks
   
-  addEnemy: -> 
+  addEnemy: ->
+    @enemy_count = @map.usedTileCount()
+    @finished = true if @enemy_count >= LOSS_DENSITY_COUNT
+    
     converted = @map.convertedTiles()
     
     number = Math.max(Math.floor(converted.length * WAVE_PERCENTAGE * @difficulty), 1)
@@ -41,11 +44,9 @@ class Game extends Model
       
         enemy.listen 'destroyed', _((old_val, new_val) ->
           this.destroyEnemy(enemy) if new_val
-          @enemy_count -= number
         ).bind(this)
     ).bind(this)
     
-    @enemy_count += number
     @last_enemy = ticks
   
   destroyEnemy: (enemy) ->
@@ -73,6 +74,7 @@ class Game extends Model
     false
   
   update: ->
+    return if @finished
     @last_enemy = ticks unless @last_enemy?
     
     this.addEnemy() if (ticks - @last_enemy) > @attack_interval

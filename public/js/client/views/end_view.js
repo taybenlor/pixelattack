@@ -10,9 +10,16 @@
   };
   EndView = (function() {
     __extends(EndView, View);
-    function EndView(parent) {
+    function EndView(parent, game) {
+      this.game = game;
       EndView.__super__.constructor.apply(this, arguments);
-      this.element = $("<section class=\"intro\">\n\n</section>");
+      this.element = $("<section class=\"intro\">\n  <h1><strong class=\"pixels\">You Lose</strong></h1>\n    \n  <h1><strong class=\"pixels\"> " + this.game.score + "pts </strong></h1>\n  \n  <button>Again?</button>\n</section>");
+      this.element.children('button').click(_(function() {
+        return this.fire('click', {
+          source: this,
+          details: ''
+        });
+      }).bind(this));
     }
     EndView.prototype.render = function() {
       return this.element;

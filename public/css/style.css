@@ -1,3 +1,19 @@
+@font-face{
+	font-family: 'DayPosterBlack';
+	src: url('/fonts/daypbl.eot');
+	src: local('☺'), url('/fonts/daypbl.woff') format('woff'), url('/fonts/daypbl.ttf') format('truetype'), url('/fonts/daypbl.svg#webfontVZcfyX7f') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face{
+	font-family: 'SilkScreenEB';
+	src: url('/fonts/slkscreb-webfont.eot');
+	src: local('☺'), url('/fonts/slkscreb-webfont.woff') format('woff'), url('/fonts/slkscreb-webfont.ttf') format('truetype'), url('/fonts/slkscreb-webfont.svg#webfontVZcfyX7f') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
 /**
  * HTML5 ✰ Boilerplate
  *
@@ -161,13 +177,6 @@ body {-webkit-tap-highlight-color: rgb(255,255,158);}
 
 /*	Typography presets
 	------------------	*/
-
-.gigantic {
-	font-size: 110px;
-	line-height: 120px;
-	letter-spacing: -2px;
-}
-
 .huge, h1 {
 	font-size: 68px;
 	line-height: 72px;
@@ -207,7 +216,7 @@ body {
  */
 
 html{
-  background: #222;
+  background: #111;
 }
 
  /*		Default Layout: 992px. 
@@ -220,14 +229,34 @@ html{
 
  body {
   margin: auto;
- 	width: 896px;
+ 	width: 712px;
  	padding: 72px 48px 84px;
- 	background: rgb(232,232,232);
+ 	background: #222;
  	color: rgb(60,60,60);
  	-webkit-text-size-adjust: 100%; /* Stops Mobile Safari from auto-adjusting font-sizes */
  	
  	box-shadow: 0 5px 5px black;
  }
+
+ .game{
+   margin-left: -28px;
+   padding-bottom: 10px;
+   box-shadow: 0 10px #666;
+   width: 770px;
+   background-color: #444;
+   -webkit-border-radius: 4px;
+ }
+ 
+  .game ul{
+   
+  }
+    .game li{
+      list-style: none;
+      display: inline-block;
+      color: #AAA;
+      margin-left: 10px;
+      font-family: SilkscreenEB;
+    }
 
  .map{
    margin: auto;
@@ -243,6 +272,100 @@ html{
     );
    box-shadow: inset 0 0 40px rgba(0,0,0,0.3), inset 0 0 1px black;
  }
+ 
+ h1{
+   font-size: 14px;
+   font-family: Helvetica, sans-serif;
+   text-align: center;
+   line-height: 14px;
+ }
+ 
+ h1 strong{
+   line-height: 64px;
+   font-size: 64px;
+   color: #AAA;
+ }
+ 
+  h1 strong.pixies{
+    display: block;
+    font-family: DayPosterBlack;
+  }
+  
+  h1 strong.pixels{
+    display: block;
+    font-family: SilkscreenEB;
+    text-shadow: 0 5px #888;
+  }
+ 
+ h2 {
+   font-size: 16px;
+   float: right;
+ }
+ 
+ button{
+   display: block;
+
+   font-weight: bold;
+   color: rgb(0,40,0);
+   text-shadow: 0 -1px rgba(255,255,255,0.2), 0 1px rgba(0,0,0,0.2);
+   
+   width: 80px;
+   height: 30px;
+   -webkit-border-radius: 5px;
+
+   border: none;
+   
+   margin-top: 20px;
+   margin-bottom: 20px;
+   position: relative;
+   left: 50%;
+   margin-left: -40px;
+
+   background-color: green;
+   background-image:
+    -webkit-repeating-linear-gradient(45deg, 
+      rgba(255,255,255,0.1), 
+      rgba(255,255,255,0.1) 4px, 
+      transparent 4px, 
+      transparent 8px
+    );
+   box-shadow: 0 5px rgb(0,100,0), inset 0 0 5px rgba(255,255,255,0.3), inset 0 0 1px black;
+ }
+ 
+  button:hover{
+    box-shadow: inset 0 0 20px rgba(255,255,255,0.2), 0 5px rgb(0,100,0), inset 0 0 5px rgba(255,255,255,0.3), inset 0 0 1px black;
+  }
+  
+  button:active{
+    top: 5px;
+    box-shadow: inset 0 0 3px black;
+  }
+  
+
+p{
+  margin-top: 10px;
+  color: #999;
+}
+
+h3{
+  color: rgba(30,70, 120, 0.4);
+  font-size: 20px;
+  text-align: center;
+}
+
+ul.instructions{
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 230px;
+}
+
+.instructions li{
+  list-style: none;
+  display: inline-block;
+  width: 50px;
+  margin: 10px;
+}
 
 /*
 * Standard tile stylings
