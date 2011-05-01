@@ -10,9 +10,10 @@ class MapView extends View
         
       </figure>
       """
-    @tiles = _([])
+      
+    @enemy_views = {}
     
-    @map.tiles.each _((tile) ->
+    _(@map.tiles).each _((tile) ->
       this.addChild(new TileView(this, tile))
     ).bind(this)
     

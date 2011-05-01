@@ -243,88 +243,452 @@ html{
     );
    box-shadow: inset 0 0 40px rgba(0,0,0,0.3), inset 0 0 1px black;
  }
+
+/*
+* Standard tile stylings
+*
+*/
  
  .tile{
    position: absolute;
    box-shadow: inset 0 0 1px rgba(0,0,0,0.2);
  }
-  
+    
   .tile:hover{
-    box-shadow: 0 0 8px white, inset 0px 0px 1px rgba(0,0,0,0.2);
-    background-color: rgba(255,255,255,0.2);
+    box-shadow: 0 0 8px white, inset 0px 0px 1px rgba(0,0,0,0.2), inset 0px 0px 40px rgba(255,255,255,0.2);
     cursor: pointer;
   }
   
-    /* mushroom middle */
-    .tile .tower.default{
-      position: relative;
-      width: 100%;
-      height: 40px;
-      -webkit-border-radius: 5px;
-      -moz-border-radius: 5px;
-      border-radius: 5px;
-      
-      top: -20px;
-      box-shadow: 0 5px rgb(255, 255, 224), 0 25px 4px rgba(0,0,0,0.2), inset 0px 0px 2px black;  
-      
-      background-color: red;
-      background-image: 
-        -webkit-linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)),
-        -webkit-radial-gradient(white 30%, transparent 31%),
-      	-webkit-radial-gradient(white 30%, transparent 31%);
-      background-size:20px 20px;
-      background-position: 0 0, 0 0, 30px 30px;
+/*
+ * Converted Tiles
+ *
+ */
+  
+  .tile.converted{
+    background-color: #112;
+    background-image: 
+      -webkit-linear-gradient(rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.7) 100%),
+      -webkit-linear-gradient(rgb(70, 130, 180) 1px, transparent 1px),
+      -webkit-linear-gradient(0, rgb(70, 130, 180) 1px, transparent 1px);
+    background-size:5px 5px;
+  }
+  
+    .tile.converted.top{
+      box-shadow: inset 0 5px rgb(100,100,100);
     }
     
-    /* Mushroom pillar */
-    .tile .tower.default:before{
+      .tile.converted.top:hover{
+        box-shadow: 
+          inset 0 5px rgb(100,100,100), 
+          0 0 8px white, 
+          inset 0px 0px 1px rgba(0,0,0,0.2), 
+          inset 0px 0px 40px rgba(255,255,255,0.2);
+      }
+    
+    .tile.converted.up{
+      box-shadow: inset 0 5px rgb(0,100,0);
+    }
+    
+      .tile.converted.up:hover{
+        box-shadow: 
+          inset 0 5px rgb(0,100,0), 
+          0 0 8px white, 
+          inset 0px 0px 1px rgba(0,0,0,0.2), 
+          inset 0px 0px 40px rgba(255,255,255,0.2);
+      }
+  
+    .tile.converted:before{
+      content: '';
+      display: none;
+      position: absolute;     
+      
+      background-color: #112;
+      background-image: 
+        -webkit-linear-gradient(rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.7) 100%),
+        -webkit-linear-gradient(rgb(70, 130, 180) 1px, transparent 1px),
+        -webkit-linear-gradient(0, rgb(70, 130, 180) 1px, transparent 1px);
+      background-size:5px 5px;
+      box-shadow: 0px -5px rgb(0,100,0);
+    }
+  
+      .tile.converted.left:before{
+        display: block;
+        width: 10px;
+        height: 25px;
+        top: 50%;
+        margin-top: -10px;
+        left: -10px;
+      }
+      
+      .tile.converted.right:before{
+        display: block;
+        width: 10px;
+        height: 25px;
+        top: 50%;
+        margin-top: -10px;
+        right: -10px;
+      }
+      
+    
+    .tile:hover.converted:before{
+      box-shadow: 0px -5px 0px rgb(0,100,0), inset 10px 0px 20px rgba(255,255,255,0.2);
+    }
+  
+  /*
+  *  _____                      
+  * |_   _|____ __ _____ _ _ ___
+  *   | |/ _ \ V  V / -_) '_(_-<
+  *  |_|\___/\_/\_/\___|_| /__/
+  *
+  *
+  */
+
+  /* mushroom middle */
+  .tower.default{
+    position: relative;
+    width: 100%;
+    height: 40px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    
+    top: -20px;
+    box-shadow: 0 5px rgb(255, 255, 224), 0 25px 4px rgba(0,0,0,0.2), inset 0px 0px 2px black;  
+    
+    -webkit-transition: height 0.2s ease, top 0.2s ease;
+    
+    background-color: red;
+    background-image: 
+      -webkit-linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)),
+      -webkit-radial-gradient(white 30%, transparent 31%),
+    	-webkit-radial-gradient(white 30%, transparent 31%);
+    background-size:20px 20px;
+    background-position: 0 0, 0 0, 30px 30px;
+  }
+  
+  .tower.default.attacking{
+    height: 30px;
+    top: -10px;
+  }
+  
+  /* Mushroom pillar */
+  .tower.default:before{
+    content: '';
+    display: block;
+    position: absolute;
+    width: 24px;
+    height: 10px;
+    margin-top: 5px;
+    margin-left: -12px;
+    top: 100%;
+    left: 50%;
+    
+    -webkit-border-bottom-left-radius: 10px;
+    -webkit-border-bottom-right-radius: 10px;
+    -webkit-border-top-left-radius: 5px 15px;
+    -webkit-border-top-right-radius: 5px 15px;
+    box-shadow: inset 0px 0px 2px black;
+    
+    background-color: rgb(255, 255, 224);
+    background-image: -webkit-linear-gradient(0, transparent 50%, rgba(0,0,0,.1) 50%);
+    background-size: 5px;
+  }
+  
+  /* Mushroom top*/
+  .tower.default:after{
+    content: '';
+    display: block;
+    position: absolute;
+    width: 100%;
+    height: 35px;
+    top: 0;
+    left: 0;
+    
+    -webkit-border-radius: 5px;
+    
+    box-shadow: inset 0px 0px 2px black;
+    
+    background-color: red;
+    background-image: 
+      -webkit-radial-gradient(rgb(255, 255, 224) 30%, transparent 31%),
+    	-webkit-radial-gradient(rgb(255, 255, 224) 30%, transparent 31%);
+    background-size:20px 20px;
+    background-position: 0 0, 30px 30px;
+  }
+  
+  .tile:hover .tower.default:after{
+    box-shadow: 0 0 8px white, inset 0 0 8px white, inset 0px 0px 2px black;
+  }
+    
+  /*
+  *  ___                                            
+  * (  _`\                           _              
+  * | (_(_)  ___     __    ___ ___  (_)   __    ___ 
+  * |  _)_ /' _ `\ /'__`\/' _ ` _ `\| | /'__`\/',__)
+  * | (_( )| ( ) |(  ___/| ( ) ( ) || |(  ___/\__, \
+  * (____/'(_) (_)`\____)(_) (_) (_)(_)`\____)(____/
+  *
+  */
+
+  .enemy{
+    position: absolute;
+    display: block;
+    width: 100%;
+    height: 100%;
+    
+    background-color: yellow;
+    -webkit-transition: -webkit-transform 1s ease, margin-top 0.5s ease, background-color 0.2s ease;
+  }
+  
+  
+    .enemy.hit, .enemy.hit:before, .enemy.hit:after{
+      background-color: #312 !important;
+    }
+    
+    .enemy.damaged:before{
+      display: none !important;
+    }
+    
+    .enemy.damaged.severely:after{
+      display: none !important;
+    }
+  
+    .enemy.on-converted{
+      margin-top: 5px !important;
+    }
+    
+    .enemy.converting{
+      margin-top: 10px !important;
+    }
+  
+  /* Plus symbol, cross bar */
+  .enemy.default{
+    top: 0px;
+    left: 5px;
+    width: 38px;
+    height: 14px;
+    border: 1px solid rgb(70, 130, 180);
+    box-shadow: 0 5px black, 0 15px 4px rgba(0,0,0,0.2);
+    
+    background-color: #112;
+    background-image: 
+      -webkit-linear-gradient(rgba(70, 130, 180,0.5) 1px, transparent 1px),
+      -webkit-linear-gradient(0, rgba(70, 130, 180, 0.5) 1px, transparent 1px);
+    background-size:5px 5px;
+    background-position: -1px -1px;
+  }
+    .enemy.default.converting{
+      box-shadow: 0 5px black;
+    }
+  
+    /* Plus symbol top bit */
+    .enemy.default:before{
       content: '';
       display: block;
       position: absolute;
-      width: 24px;
-      height: 10px;
-      margin-top: 5px;
-      margin-left: -12px;
-      top: 100%;
+      width: 16px;
+      height: 16px;
+      top: -16px;
       left: 50%;
-      
-      -webkit-border-bottom-left-radius: 10px;
-      -webkit-border-bottom-right-radius: 10px;
-      -webkit-border-top-left-radius: 5px 15px;
-      -webkit-border-top-right-radius: 5px 15px;
-      box-shadow: inset 0px 0px 2px black;
-      
-      background-color: rgb(255, 255, 224);
-      background-image: -webkit-linear-gradient(0, transparent 50%, rgba(0,0,0,.1) 50%);
-      background-size: 5px;
+      margin-left: -8px;
+      box-shadow: 
+        inset 0 1px rgb(70, 130, 180), 
+        inset -1px 0 rgb(70, 130, 180), 
+        inset 1px 0 rgb(70, 130, 180);
+    
+      background-color: #112;
+      background-image: 
+        -webkit-linear-gradient(rgba(70, 130, 180,0.5) 1px, transparent 1px),
+        -webkit-linear-gradient(0, rgba(70, 130, 180, 0.5) 1px, transparent 1px);
+      background-size:5px 5px;
+      background-position: -2px 0px;
     }
     
-    /* Mushroom top*/
-    .tile .tower.default:after{
+    /* Plus symbol bottom bit */
+    .enemy.default:after{
       content: '';
       display: block;
       position: absolute;
-      width: 100%;
-      height: 35px;
-      top: 0;
-      left: 0;
-      
-      -webkit-border-radius: 5px;
-      
-      box-shadow: inset 0px 0px 2px black;
-      
-      background-color: red;
+      width: 16px;
+      height: 15px;
+      top: 14px;
+      left: 50%;
+      margin-left: -8px;
+      background: #112;
+      box-shadow: 
+        0 5px black, 
+        inset 0 -1px rgb(70, 130, 180), 
+        inset -1px 0 rgb(70, 130, 180), 
+        inset 1px 0 rgb(70, 130, 180),
+        0 15px 4px rgba(0,0,0,0.2);
+    
+      background-color: #112;
       background-image: 
-        -webkit-radial-gradient(rgb(255, 255, 224) 30%, transparent 31%),
-      	-webkit-radial-gradient(rgb(255, 255, 224) 30%, transparent 31%);
-      background-size:20px 20px;
-      background-position: 0 0, 30px 30px;
+        -webkit-linear-gradient(rgba(70, 130, 180,0.5) 1px, transparent 1px),
+        -webkit-linear-gradient(0, rgba(70, 130, 180, 0.5) 1px, transparent 1px);
+      background-size:5px 5px;
+      background-position: -2px 0px;
+    }
+      .enemy.default.converting:after{
+        box-shadow: 
+          0 5px black, 
+          inset 0 -1px rgb(70, 130, 180), 
+          inset -1px 0 rgb(70, 130, 180), 
+          inset 1px 0 rgb(70, 130, 180);
+      }
+    
+    /* 1, cross bar */
+    .enemy.fast{
+      top: 20px;
+      margin-left: 9px;
+      width: 30px;
+      height: 9px;
+      border: 1px solid rgb(70, 130, 180);
+      box-shadow: 0 5px black, 0 15px 4px rgba(0,0,0,0.2);
+
+      background-color: #112;
+      background-image: 
+        -webkit-linear-gradient(rgba(70, 130, 180,0.5) 1px, transparent 1px),
+        -webkit-linear-gradient(0, rgba(70, 130, 180, 0.5) 1px, transparent 1px);
+      background-size:5px 5px;
+      background-position: -1px -1px;
     }
     
-    .tile:hover .tower.default:after{
-      box-shadow: 0 0 8px white, inset 0 0 8px white, inset 0px 0px 2px black;
+      .enemy.fast.converting{
+        box-shadow: 0 5px black;
+      }
+
+      /* top bar */
+      .enemy.fast:before{
+        content: '';
+        display: block;
+        position: absolute;
+        width: 21px;
+        height: 9px;
+        top: -34px;
+        left: 8px;
+        margin-left: -10px;
+        background: #112;
+        
+        box-shadow:
+          0 1px rgb(70, 130, 180),
+          0 5px black,
+          inset 0 1px rgb(70, 130, 180), 
+          inset -1px 0 rgb(70, 130, 180), 
+          inset 1px 0 rgb(70, 130, 180),
+           0 15px 4px rgba(0,0,0,0.2);
+
+        background-color: #112;
+        background-image: 
+          -webkit-linear-gradient(rgba(70, 130, 180,0.5) 1px, transparent 1px),
+          -webkit-linear-gradient(0, rgba(70, 130, 180, 0.5) 1px, transparent 1px);
+        background-size:5px 5px;
+        background-position: 1px 0px;
+      }
+        .enemy.fast.converting:before{
+          box-shadow:
+            0 1px rgb(70, 130, 180),
+            0 5px black,
+            inset 0 1px rgb(70, 130, 180), 
+            inset -1px 0 rgb(70, 130, 180), 
+            inset 1px 0 rgb(70, 130, 180);
+        }
+
+      /* main line */
+      .enemy.fast:after{
+        content: '';
+        display: block;
+        position: absolute;
+        width: 10px;
+        height: 25px;
+        top: -25px;
+        left: 50%;
+        margin-left: -6px;
+        box-shadow: 
+          inset -1px 0 rgb(70, 130, 180), 
+          inset 1px 0 rgb(70, 130, 180);
+
+        background-color: #112;
+        background-image: 
+          -webkit-linear-gradient(rgba(70, 130, 180,0.5) 1px, transparent 1px),
+          -webkit-linear-gradient(0, rgba(70, 130, 180, 0.5) 1px, transparent 1px);
+        background-size:5px 5px;
+      }
+      
+  /* weird thing main crossbar */
+  .enemy.heavy{
+    top: 0px;
+    left: 5px;
+    width: 38px;
+    height: 14px;
+    border: 1px solid rgb(70, 130, 180);
+    box-shadow: 0 5px black, 0 15px 4px rgba(0,0,0,0.2);
+    
+    background-color: #112;
+    background-image: 
+      -webkit-linear-gradient(rgba(70, 130, 180,0.5) 1px, transparent 1px),
+      -webkit-linear-gradient(0, rgba(70, 130, 180, 0.5) 1px, transparent 1px);
+    background-size:5px 5px;
+    background-position: -1px -1px;
+  }
+  
+    .enemy.heavy.converting{
+      box-shadow: 0 5px black;
     }
 
+    /* weird symbol top bit */
+    .enemy.heavy:before{
+      content: '';
+      display: block;
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      top: -16px;
+      right: -1px;
+      margin-left: -6px;
+      box-shadow: 
+        inset 0 1px rgb(70, 130, 180), 
+        inset -1px 0 rgb(70, 130, 180), 
+        inset 1px 0 rgb(70, 130, 180);
+  
+      background-color: #112;
+      background-image: 
+        -webkit-linear-gradient(rgba(70, 130, 180,0.5) 1px, transparent 1px),
+        -webkit-linear-gradient(0, rgba(70, 130, 180, 0.5) 1px, transparent 1px);
+      background-size:5px 5px;
+      background-position: 1px 0px;
+    }
+  
+    /* weird symbol bottom bit */
+    .enemy.heavy:after{
+      content: '';
+      display: block;
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      top: 14px;
+      left: -1px;
+
+      box-shadow: 0 5px black, 
+        0 15px 4px rgba(0,0,0,0.2), 
+        inset 0 -1px rgb(70, 130, 180), 
+        inset -1px 0 rgb(70, 130, 180), 
+        inset 1px 0 rgb(70, 130, 180);
+  
+      background-color: #112;
+      background-image: 
+        -webkit-linear-gradient(rgba(70, 130, 180,0.5) 1px, transparent 1px),
+        -webkit-linear-gradient(0, rgba(70, 130, 180, 0.5) 1px, transparent 1px);
+      background-size:5px 5px;
+      background-position: 0px 0px;
+    }
+    
+      .enemy.heavy.converting:after{
+        box-shadow: 0 5px black, 
+          inset 0 -1px rgb(70, 130, 180), 
+          inset -1px 0 rgb(70, 130, 180), 
+          inset 1px 0 rgb(70, 130, 180);
+      }
 
   
 /*

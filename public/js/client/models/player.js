@@ -31,16 +31,7 @@
       this.game = game;
       return this.game.addPlayer(this);
     };
-    Player.prototype.build = function(tower, tile) {
-      if (tower.cost() > this.money) {
-        return false;
-      }
-      if (tile.place(tower)) {
-        this.money -= tower.cost();
-        return true;
-      }
-      return false;
-    };
     return Player;
   })();
+  window.Player = Player;
 }).call(this);

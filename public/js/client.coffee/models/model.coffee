@@ -1,5 +1,3 @@
-window.models = {}
-
 class Model
   @id: ->
     @_id = 1 unless @_id?
@@ -8,7 +6,6 @@ class Model
   
   constructor: ->
     @id = Model.id()
-    window.models[@id] = this
     @attributes = _([])
     
   attr: (name, options) ->
@@ -37,14 +34,18 @@ class Model
       oldval = this[name]
       setter.call(this, y)
       newval = this[name]
-      this["_#{name}_listeners"].each((fn) -> fn(oldval, newval))
+      this["_#{name}_listeners"].each((fn) -> 
+        _((-> 
+          fn(oldval, newval)
+        )).defer()
+      ) #wait to fire these events
 
   listen: (property, fn) ->
     this["_#{property}_listeners"].push(fn)  
     
   unlisten: (property, fn) ->
     this["_#{property}_listeners"] = this["_#{property}_listeners"].without(fn)    
-      
+
     
 window.Model = Model
     

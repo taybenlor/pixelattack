@@ -22,8 +22,8 @@
         this.height = 500;
       }
       this.element = $("<figure style=\"width:" + this.width + "px;height:" + this.height + "px\" class=\"map\">\n  \n</figure>");
-      this.tiles = _([]);
-      this.map.tiles.each(_(function(tile) {
+      this.enemy_views = {};
+      _(this.map.tiles).each(_(function(tile) {
         return this.addChild(new TileView(this, tile));
       }).bind(this));
     }

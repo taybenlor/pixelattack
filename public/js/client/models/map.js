@@ -18,13 +18,34 @@
       this.attr('height', {
         "default": height || 10
       });
-      this.tiles = _([]);
+      this.tiles = [];
       _(_.range(this.width)).each(_(function(x) {
         return _(_.range(this.height)).each(_(function(y) {
-          return this.tiles.push(new Tile(x, y));
+          var tile;
+          tile = new Tile(this, x, y);
+          return this.tiles.push(tile);
         }).bind(this));
       }).bind(this));
+      _(10).times(_(function() {
+        var tile;
+        tile = this.tiles[Math.floor(Math.random() * this.tiles.length)];
+        while (tile.converted) {
+          tile = this.tiles[Math.floor(Math.random() * this.tiles.length)];
+        }
+        return tile.converted = true;
+      }).bind(this));
     }
+    Map.prototype.convertedTiles = function() {
+      return _(this.tiles).reject(function(tile) {
+        return !tile.converted;
+      });
+    };
+    Map.prototype.getTile = function(x, y) {
+      if ((x < 0) || (y < 0) || (x > this.width) || (y > this.height)) {
+        return null;
+      }
+      return this.tiles[(x * this.height) + y];
+    };
     return Map;
   })();
   window.Map = Map;

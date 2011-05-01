@@ -13,7 +13,14 @@
     function TowerView(parent, tower) {
       this.tower = tower;
       TowerView.__super__.constructor.apply(this, arguments);
-      this.element = $("<figure class=\"tower " + this.tower.type + "\">\n</figure>");
+      this.element = $("<figure class=\"tower " + this.tower.type + "\" style=\"z-index: " + (this.tower.tile.y + 10) + "\">\n</figure>");
+      this.tower.listen("attacking", _(function(old_val, new_val) {
+        if (new_val) {
+          return this.element.addClass('attacking');
+        } else {
+          return this.element.removeClass('attacking');
+        }
+      }).bind(this));
     }
     TowerView.prototype.render = function() {
       return this.element;

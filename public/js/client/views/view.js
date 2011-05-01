@@ -4,8 +4,12 @@
     function View(parent, options) {
       this.parent = parent;
       this.events = _([]);
+      this.event_listeners = _({});
       this.element = $('<div></div>');
       this.children = _([]);
+      if (this.parent != null) {
+        this.parent.addChild(this);
+      }
     }
     View.prototype.render = function() {
       return this.element;
@@ -14,7 +18,7 @@
       return this.children.push(c);
     };
     View.prototype.removeChild = function(c) {
-      return this.children = this.children.without(c);
+      return this.children = _(this.children.without(c));
     };
     View.prototype.hide = function() {
       return this.element.addClass('hidden');
@@ -29,21 +33,24 @@
       return this.remove();
     };
     View.prototype.event = function(name) {
-      if (this.parent) {
-        this.parent.event(name);
-      }
       this.events.push(name);
-      return this["_event_" + name + "_listeners"] = _([]);
+      return this.event_listeners[name] = _([]);
     };
     View.prototype.listen = function(name, fn) {
-      return this["_event_" + name + "_listeners"].push(fn);
+      if (!this.event_listeners[name]) {
+        this.event(name);
+      }
+      return this.event_listeners[name].push(fn);
     };
     View.prototype.unlisten = function(name, fn) {
-      return this["_event_" + name + "_listeners"] = this["_event_" + name + "_listeners"].without(fn);
+      return this.event_listeners[name] = this.event_listeners[name].without(fn);
     };
     View.prototype.fire = function(name, obj) {
       var done;
-      done = this["_event_" + name + "_listeners"].any(_(function(fn) {
+      if (!this.event_listeners[name]) {
+        this.event(name);
+      }
+      done = this.event_listeners[name].any(_(function(fn) {
         return fn.call(this, name, obj);
       }).bind(this));
       if (this.parent && !done) {

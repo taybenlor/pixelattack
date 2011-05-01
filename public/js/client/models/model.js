@@ -1,6 +1,5 @@
 (function() {
   var Model;
-  window.models = {};
   Model = (function() {
     Model.id = function() {
       if (this._id == null) {
@@ -11,7 +10,6 @@
     };
     function Model() {
       this.id = Model.id();
-      window.models[this.id] = this;
       this.attributes = _([]);
     }
     Model.prototype.attr = function(name, options) {
@@ -43,7 +41,9 @@
         setter.call(this, y);
         newval = this[name];
         return this["_" + name + "_listeners"].each(function(fn) {
-          return fn(oldval, newval);
+          return _((function() {
+            return fn(oldval, newval);
+          })).defer();
         });
       });
     };
